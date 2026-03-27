@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: redmoons-library-pro
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn Pustaka:app"
+    envVars:
+      - key: SECRET_KEY
+        value: redmoon_render_secret_key

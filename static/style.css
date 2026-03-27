@@ -1,0 +1,55 @@
+body {
+    background: linear-gradient(135deg, #111827, #1f2937, #374151);
+    min-height: 100vh;
+}
+
+.hero-redmoon {
+    background: linear-gradient(135deg, #7f1d1d, #991b1b, #111827);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.card {
+    background-color: #ffffff;
+}
+
+.footer-redmoon {
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+}
+
+.table thead th {
+    vertical-align: middle;
+}
+
+.btn {
+    border-radius: 10px;
+}
+
+.card, .hero-redmoon {
+    border-radius: 20px !important;
+}
+
+/* ===== ADMIN HEADER PREMIUM ===== */
+.admin-header {
+    background: linear-gradient(135deg, #7f1d1d, #111827);
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+.admin-title {
+    color: #ffffff;
+    margin: 0;
+}
+
+.btn-redmoon {
+    background: linear-gradient(135deg, #b91c1c, #7f1d1d);
+    color: white;
+    border: none;
+    font-weight: 600;
+}
+
+.btn-redmoon:hover {
+    background: linear-gradient(135deg, #991b1b, #651111);
+    color: white;
+}

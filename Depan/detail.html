@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow border-0 rounded-4">
+            <div class="card-body p-4">
+                <h2 class="fw-bold mb-4 text-center">Detail Buku</h2>
+
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="35%">ID Buku</th>
+                        <td>{{ buku['id_buku'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>Judul Buku</th>
+                        <td>{{ buku['judul_buku'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>Penerbit</th>
+                        <td>{{ buku['penerbit'] }}</td>
+                    </tr>
+                </table>
+
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('home') }}" class="btn btn-primary">Kembali ke Home</a>
+                    <a href="{{ url_for('admin') }}" class="btn btn-dark">Masuk ke Admin</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

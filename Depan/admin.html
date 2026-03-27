@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="admin-header d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+    <h2 class="fw-bold mb-3 mb-md-0 admin-title">Panel Admin - Redmoon’s Library PRO</h2>
+    <a href="{{ url_for('tambah') }}" class="btn btn-redmoon">+ Tambah Buku</a>
+</div>
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body">
+        <form method="GET" action="{{ url_for('admin') }}" class="d-flex mb-3" role="search">
+            <input type="text" name="keyword" class="form-control me-2" placeholder="Cari ID / Judul / Penerbit..." value="{{ keyword }}">
+            <button type="submit" class="btn btn-primary">Cari</button>
+        </form>
+
+        {% if buku_list %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID Buku</th>
+                        <th>Judul Buku</th>
+                        <th>Penerbit</th>
+                        <th width="220">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for buku in buku_list %}
+                    <tr>
+                        <td>{{ buku['id_buku'] }}</td>
+                        <td>{{ buku['judul_buku'] }}</td>
+                        <td>{{ buku['penerbit'] }}</td>
+                        <td>
+                            <a href="{{ url_for('detail', id_buku=buku['id_buku']) }}" class="btn btn-info btn-sm text-white">Detail</a>
+                            <a href="{{ url_for('edit', id_buku=buku['id_buku']) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{{ url_for('hapus', id_buku=buku['id_buku']) }}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Yakin ingin menghapus buku ini?')">Hapus</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <div class="alert alert-secondary mb-0">Belum ada data buku.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

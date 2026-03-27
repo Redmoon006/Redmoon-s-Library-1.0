@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-4 p-md-5 mb-4 rounded-4 hero-redmoon text-white shadow">
+    <div class="col-lg-8 px-0">
+        <h1 class="display-5 fw-bold">Selamat Datang di Redmoon’s Library</h1>
+        <p class="lead mt-3">
+            Illuminate Your Mind Under the Redmoon
+        </p>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
+            <h3 class="fw-bold mb-3 mb-md-0">Daftar Buku</h3>
+
+            <form method="GET" action="{{ url_for('home') }}" class="d-flex" role="search">
+                <input type="text" name="keyword" class="form-control me-2" placeholder="Cari ID / Judul / Penerbit..." value="{{ keyword }}">
+                <button type="submit" class="btn btn-primary">Cari</button>
+            </form>
+        </div>
+
+        {% if buku_list %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID Buku</th>
+                        <th>Judul Buku</th>
+                        <th>Penerbit</th>
+                        <th width="120">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for buku in buku_list %}
+                    <tr>
+                        <td>{{ buku['id_buku'] }}</td>
+                        <td>{{ buku['judul_buku'] }}</td>
+                        <td>{{ buku['penerbit'] }}</td>
+                        <td>
+                            <a href="{{ url_for('detail', id_buku=buku['id_buku']) }}" class="btn btn-info btn-sm text-white">Detail</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <div class="alert alert-secondary mb-0">Belum ada data buku.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
