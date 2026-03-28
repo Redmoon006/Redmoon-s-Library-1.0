@@ -5,8 +5,29 @@ body {
     margin: 0;
     min-height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(180deg, #14152a 0%, #243b90 100%);
+    background: #0b1020;
     color: #ffffff;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(rgba(8, 8, 25, 0.72), rgba(25, 8, 35, 0.78)),
+                url("/static/bg-redmoon.png") center center / cover no-repeat;
+    filter: blur(3px);
+    transform: scale(1.05);
+    z-index: -2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 12, 28, 0.25);
+    z-index: -1;
 }
 
 a {
@@ -61,6 +82,18 @@ a {
 /* =========================
    HERO
 ========================= */
+.hero-section {
+    background: linear-gradient(135deg, rgba(180, 35, 55, 0.88), rgba(90, 35, 150, 0.82));
+    border-radius: 28px;
+    padding: 60px 40px;
+    color: white;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
 .hero-card {
     background: linear-gradient(135deg, #d12b45 0%, #c6325f 40%, #7a2df5 100%);
     border-radius: 28px;
@@ -254,6 +287,40 @@ a {
 ========================= */
 .redmoon-footer {
     color: rgba(255, 255, 255, 0.8);
+}
+
+/* =========================
+   POPUP FOOTER
+========================= */
+.popup-footer {
+    position: fixed;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%) translateY(120%);
+    width: min(95%, 1100px);
+    background: rgba(18, 20, 45, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 14px 20px;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+    z-index: 9999;
+    opacity: 0;
+    transition: all 0.45s ease;
+    pointer-events: none;
+}
+
+.popup-footer.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+.footer-text {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.95rem;
 }
 
 /* =========================
