@@ -7,14 +7,14 @@ app = Flask(__name__, template_folder='Depan')
 DATABASE = 'instance/redmoon_library.db'
 
 
-#database connection
+# DATABASE CONNECTION
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
 
-#init database
+# INIT DATABASE
 def init_db():
     os.makedirs('instance', exist_ok=True)
 
@@ -32,16 +32,30 @@ def init_db():
 
 init_db()
 
-#home
+
+# HOME (WEB UTAMA)
 @app.route('/')
 def home():
+    keyword = request.args.get('keyword', '').strip()
+
     conn = get_db_connection()
-    buku_list = conn.execute('SELECT * FROM buku ORDER BY id_buku ASC').fetchall()
+
+    if keyword:
+        buku_list = conn.execute('''
+            SELECT * FROM buku
+            WHERE id_buku LIKE ?
+               OR judul_buku LIKE ?
+               OR penerbit LIKE ?
+            ORDER BY id_buku ASC
+        ''', (f'%{keyword}%', f'%{keyword}%', f'%{keyword}%')).fetchall()
+    else:
+        buku_list = conn.execute('SELECT * FROM buku ORDER BY id_buku ASC').fetchall()
+
     conn.close()
-    return render_template('home.html', buku_list=buku_list)
+    return render_template('home.html', buku_list=buku_list, keyword=keyword)
 
 
-#admin panel
+# ADMIN PANEL
 @app.route('/admin')
 def admin():
     keyword = request.args.get('keyword', '').strip()
@@ -63,7 +77,7 @@ def admin():
     return render_template('admin.html', buku_list=buku_list, keyword=keyword)
 
 
-#tambah buku
+# TAMBAH BUKU
 @app.route('/tambah', methods=['GET', 'POST'])
 def tambah():
     error = None
@@ -94,7 +108,7 @@ def tambah():
     return render_template('tambah.html', error=error)
 
 
-#edit buku
+# EDIT BUKU
 @app.route('/edit/<id_buku>', methods=['GET', 'POST'])
 def edit(id_buku):
     conn = get_db_connection()
@@ -125,7 +139,7 @@ def edit(id_buku):
     return render_template('edit.html', buku=buku, error=error)
 
 
-#hapus buku
+# HAPUS BUKU
 @app.route('/hapus/<id_buku>', methods=['POST'])
 def hapus(id_buku):
     conn = get_db_connection()
@@ -135,7 +149,7 @@ def hapus(id_buku):
     return redirect(url_for('admin'))
 
 
-#detail buku
+# DETAIL BUKU
 @app.route('/detail/<id_buku>')
 def detail(id_buku):
     conn = get_db_connection()
@@ -147,6 +161,7 @@ def detail(id_buku):
 
     return render_template('detail.html', buku=buku)
 
-#jalanin app
+
+# RUN APP
 if __name__ == '__main__':
     app.run(debug=True)

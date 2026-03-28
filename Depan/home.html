@@ -1,20 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="text-center mb-5">
-    <h1 class="fw-bold redmoon-title">Selamat Datang di Redmoon's Library 1.0</h1>
-    <p class="text-muted">Sistem Informasi Perpustakaan Sederhana berbasis Flask + SQLite</p>
-    <a href="{{ url_for('admin') }}" class="btn btn-redmoon mt-2">Masuk Panel Admin</a>
+<div class="hero-card mb-4">
+    <div class="hero-content">
+        <h1 class="hero-title">Selamat Datang di Redmoon’s Library</h1>
+        <p class="hero-subtitle mb-0">Illuminate Your Mind Under the Redmoon</p>
+    </div>
 </div>
 
-<div class="card shadow-sm border-0 rounded-4">
-    <div class="card-body">
-        <h3 class="fw-bold mb-3">Daftar Buku</h3>
+<div class="premium-card">
+    <div class="premium-card-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+        <h2 class="section-title mb-0">Daftar Buku</h2>
 
+        <form method="GET" action="{{ url_for('home') }}" class="search-form d-flex">
+            <input type="text" name="keyword" class="form-control search-input" placeholder="Cari ID / Judul / Penerbit..." value="{{ keyword }}">
+            <button type="submit" class="btn btn-search">Cari</button>
+        </form>
+    </div>
+
+    <div class="premium-card-body">
         {% if buku_list %}
         <div class="table-responsive">
-            <table class="table table-bordered table-hover align-middle">
-                <thead class="table-dark">
+            <table class="table premium-table align-middle mb-0">
+                <thead>
                     <tr>
                         <th>ID Buku</th>
                         <th>Judul Buku</th>
@@ -29,7 +37,7 @@
                         <td>{{ buku['judul_buku'] }}</td>
                         <td>{{ buku['penerbit'] }}</td>
                         <td>
-                            <a href="{{ url_for('detail', id_buku=buku['id_buku']) }}" class="btn btn-info btn-sm text-white">Detail</a>
+                            <a href="{{ url_for('detail', id_buku=buku['id_buku']) }}" class="btn btn-info btn-sm text-white rounded-pill px-3">Detail</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -37,7 +45,7 @@
             </table>
         </div>
         {% else %}
-            <div class="alert alert-secondary mb-0">Belum ada data buku.</div>
+            <p class="empty-text mb-0">Belum ada data buku.</p>
         {% endif %}
     </div>
 </div>

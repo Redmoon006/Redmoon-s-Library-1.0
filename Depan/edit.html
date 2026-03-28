@@ -2,34 +2,34 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-        <div class="card shadow border-0 rounded-4">
-            <div class="card-body p-4">
-                <h2 class="fw-bold mb-4 text-center">Edit Buku</h2>
+    <div class="col-lg-7 col-xl-6">
+        <div class="form-card">
+            <div class="form-card-body">
+                <h2 class="form-title text-center mb-4">Edit Buku</h2>
 
                 {% if error %}
-                <div class="alert alert-danger">{{ error }}</div>
+                <div class="alert alert-danger rounded-4">{{ error }}</div>
                 {% endif %}
 
                 <form method="POST">
                     <div class="mb-3">
-                        <label class="form-label">ID Buku</label>
-                        <input type="text" class="form-control" value="{{ buku['id_buku'] }}" readonly>
+                        <label class="form-label fw-semibold">ID Buku</label>
+                        <input type="text" class="form-control premium-input" value="{{ buku['id_buku'] }}" readonly>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Judul Buku</label>
-                        <input type="text" name="judul_buku" class="form-control" value="{{ buku['judul_buku'] }}" required>
+                        <label class="form-label fw-semibold">Judul Buku</label>
+                        <input type="text" name="judul_buku" class="form-control premium-input" value="{{ buku['judul_buku'] }}" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Penerbit</label>
-                        <input type="text" name="penerbit" class="form-control" value="{{ buku['penerbit'] }}" required>
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Penerbit</label>
+                        <input type="text" name="penerbit" class="form-control premium-input" value="{{ buku['penerbit'] }}" required>
                     </div>
 
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-warning">Update</button>
-                        <a href="{{ url_for('admin') }}" class="btn btn-secondary">Kembali</a>
+                        <button type="submit" class="btn btn-warning btn-lg rounded-pill">Update</button>
+                        <a href="{{ url_for('admin') }}" class="btn btn-light btn-lg rounded-pill">Kembali</a>
                     </div>
                 </form>
             </div>

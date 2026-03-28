@@ -1,27 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="admin-header d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
-    <h2 class="fw-bold mb-3 mb-md-0 admin-title">Panel Admin - Redmoon's Library 1.0</h2>
-    <a href="{{ url_for('tambah') }}" class="btn btn-redmoon">+ Tambah Buku</a>
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    <h2 class="admin-page-title mb-0">Panel Admin - Redmoon's Library 1.0</h2>
+    <a href="{{ url_for('tambah') }}" class="btn btn-redmoon rounded-pill px-4">+ Tambah Buku</a>
 </div>
 
-<div class="card shadow-sm border-0 rounded-4">
-    <div class="card-body">
-        <form method="GET" action="{{ url_for('admin') }}" class="d-flex mb-3" role="search">
-            <input type="text" name="keyword" class="form-control me-2" placeholder="Cari ID / Judul / Penerbit..." value="{{ keyword }}">
-            <button type="submit" class="btn btn-primary">Cari</button>
-        </form>
+<div class="premium-card">
+    <div class="premium-card-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+        <h2 class="section-title mb-0">Kelola Data Buku</h2>
 
+        <form method="GET" action="{{ url_for('admin') }}" class="search-form d-flex">
+            <input type="text" name="keyword" class="form-control search-input" placeholder="Cari ID / Judul / Penerbit..." value="{{ keyword }}">
+            <button type="submit" class="btn btn-search">Cari</button>
+        </form>
+    </div>
+
+    <div class="premium-card-body">
         {% if buku_list %}
         <div class="table-responsive">
-            <table class="table table-bordered table-hover align-middle">
-                <thead class="table-dark">
+            <table class="table premium-table align-middle mb-0">
+                <thead>
                     <tr>
                         <th>ID Buku</th>
                         <th>Judul Buku</th>
                         <th>Penerbit</th>
-                        <th width="260">Aksi</th>
+                        <th width="280">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,12 +34,12 @@
                         <td>{{ buku['id_buku'] }}</td>
                         <td>{{ buku['judul_buku'] }}</td>
                         <td>{{ buku['penerbit'] }}</td>
-                        <td class="d-flex flex-wrap gap-1">
-                            <a href="{{ url_for('detail', id_buku=buku['id_buku']) }}" class="btn btn-info btn-sm text-white">Detail</a>
-                            <a href="{{ url_for('edit', id_buku=buku['id_buku']) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <td class="d-flex flex-wrap gap-2">
+                            <a href="{{ url_for('detail', id_buku=buku['id_buku']) }}" class="btn btn-info btn-sm text-white rounded-pill px-3">Detail</a>
+                            <a href="{{ url_for('edit', id_buku=buku['id_buku']) }}" class="btn btn-warning btn-sm rounded-pill px-3">Edit</a>
 
                             <form action="{{ url_for('hapus', id_buku=buku['id_buku']) }}" method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus buku ini?')">Hapus</button>
+                                <button type="submit" class="btn btn-danger btn-sm rounded-pill px-3" onclick="return confirm('Yakin ingin menghapus buku ini?')">Hapus</button>
                             </form>
                         </td>
                     </tr>
@@ -44,7 +48,7 @@
             </table>
         </div>
         {% else %}
-            <div class="alert alert-secondary mb-0">Belum ada data buku.</div>
+            <p class="empty-text mb-0">Belum ada data buku.</p>
         {% endif %}
     </div>
 </div>
