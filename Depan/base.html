@@ -3,39 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redmoon’s Library </title>
+    <title>Redmoon's Library 1.0</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark redmoon-navbar shadow-sm">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="{{ url_for('home') }}">🌙 Redmoon’s Library </a>
-        <div>
-            <a href="{{ url_for('home') }}" class="btn btn-outline-light btn-sm me-2">Home</a>
-            <a href="{{ url_for('admin') }}" class="btn btn-warning btn-sm">Admin</a>
+        <a class="navbar-brand fw-bold" href="{{ url_for('home') }}">🌙 Redmoon's Library 1.0</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('admin') }}">Admin</a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
 
-<div class="container mt-4">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-
+<main class="container py-4">
     {% block content %}{% endblock %}
-</div>
+</main>
 
-<footer class="text-center mt-5 py-4 text-light footer-redmoon">
-    <p class="mb-0">© 2026 Redmoon’s Library | Sistem Informasi Perpustakaan Sederhana</p>
+<footer class="text-center py-3 mt-4 redmoon-footer">
+    <small>© 2026 Redmoon's Library 1.0 | Sistem Informasi Perpustakaan Sederhana</small>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

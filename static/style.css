@@ -1,55 +1,41 @@
 body {
-    background: linear-gradient(135deg, #111827, #1f2937, #374151);
-    min-height: 100vh;
+    background: #f5f7fb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.hero-redmoon {
-    background: linear-gradient(135deg, #7f1d1d, #991b1b, #111827);
-    border: 1px solid rgba(255,255,255,0.08);
+.redmoon-navbar {
+    background: linear-gradient(135deg, #4b0f1d, #7a1f35);
 }
 
-.card {
-    background-color: #ffffff;
+.redmoon-footer {
+    background: #111827;
+    color: #ffffff;
 }
 
-.footer-redmoon {
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(4px);
-}
-
-.table thead th {
-    vertical-align: middle;
-}
-
-.btn {
-    border-radius: 10px;
-}
-
-.card, .hero-redmoon {
-    border-radius: 20px !important;
-}
-
-/* ===== ADMIN HEADER PREMIUM ===== */
-.admin-header {
-    background: linear-gradient(135deg, #7f1d1d, #111827);
-    padding: 20px;
-    border-radius: 18px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+.redmoon-title {
+    color: #7a1f35;
 }
 
 .admin-title {
-    color: #ffffff;
-    margin: 0;
+    color: #4b0f1d;
 }
 
 .btn-redmoon {
-    background: linear-gradient(135deg, #b91c1c, #7f1d1d);
+    background-color: #7a1f35;
     color: white;
     border: none;
-    font-weight: 600;
 }
 
 .btn-redmoon:hover {
-    background: linear-gradient(135deg, #991b1b, #651111);
+    background-color: #5e1728;
     color: white;
+}
+
+.card {
+    border-radius: 1rem;
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
 }

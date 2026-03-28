@@ -7,20 +7,22 @@ app = Flask(__name__, template_folder='Depan')
 DATABASE = 'instance/redmoon_library.db'
 
 
+#database connection
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
 
+#init database
 def init_db():
     os.makedirs('instance', exist_ok=True)
 
     conn = sqlite3.connect(DATABASE)
     conn.execute('''
         CREATE TABLE IF NOT EXISTS buku (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            judul TEXT NOT NULL,
+            id_buku TEXT PRIMARY KEY,
+            judul_buku TEXT NOT NULL,
             penerbit TEXT NOT NULL
         )
     ''')
@@ -30,77 +32,121 @@ def init_db():
 
 init_db()
 
-
+#home
 @app.route('/')
 def home():
     conn = get_db_connection()
-    buku_list = conn.execute('SELECT * FROM buku ORDER BY id ASC').fetchall()
+    buku_list = conn.execute('SELECT * FROM buku ORDER BY id_buku ASC').fetchall()
     conn.close()
     return render_template('home.html', buku_list=buku_list)
 
 
+#admin panel
 @app.route('/admin')
 def admin():
+    keyword = request.args.get('keyword', '').strip()
+
     conn = get_db_connection()
-    buku_list = conn.execute('SELECT * FROM buku ORDER BY id ASC').fetchall()
+
+    if keyword:
+        buku_list = conn.execute('''
+            SELECT * FROM buku
+            WHERE id_buku LIKE ?
+               OR judul_buku LIKE ?
+               OR penerbit LIKE ?
+            ORDER BY id_buku ASC
+        ''', (f'%{keyword}%', f'%{keyword}%', f'%{keyword}%')).fetchall()
+    else:
+        buku_list = conn.execute('SELECT * FROM buku ORDER BY id_buku ASC').fetchall()
+
     conn.close()
-    return render_template('admin.html', buku_list=buku_list)
+    return render_template('admin.html', buku_list=buku_list, keyword=keyword)
 
 
-@app.route('/tambah', methods=('GET', 'POST'))
+#tambah buku
+@app.route('/tambah', methods=['GET', 'POST'])
 def tambah():
+    error = None
+
     if request.method == 'POST':
-        judul = request.form['judul'].strip()
-        penerbit = request.form['penerbit'].strip()
+        id_buku = request.form.get('id_buku', '').strip()
+        judul_buku = request.form.get('judul_buku', '').strip()
+        penerbit = request.form.get('penerbit', '').strip()
 
-        if judul and penerbit:
+        if not id_buku or not judul_buku or not penerbit:
+            error = 'Semua field wajib diisi.'
+        else:
             conn = get_db_connection()
-            conn.execute(
-                'INSERT INTO buku (judul, penerbit) VALUES (?, ?)',
-                (judul, penerbit)
-            )
-            conn.commit()
-            conn.close()
-            return redirect(url_for('admin'))
+            cek = conn.execute('SELECT * FROM buku WHERE id_buku = ?', (id_buku,)).fetchone()
 
-    return render_template('tambah.html')
+            if cek:
+                error = 'ID Buku sudah ada. Gunakan ID lain.'
+                conn.close()
+            else:
+                conn.execute(
+                    'INSERT INTO buku (id_buku, judul_buku, penerbit) VALUES (?, ?, ?)',
+                    (id_buku, judul_buku, penerbit)
+                )
+                conn.commit()
+                conn.close()
+                return redirect(url_for('admin'))
+
+    return render_template('tambah.html', error=error)
 
 
-@app.route('/edit/<int:id>', methods=('GET', 'POST'))
-def edit(id):
+#edit buku
+@app.route('/edit/<id_buku>', methods=['GET', 'POST'])
+def edit(id_buku):
     conn = get_db_connection()
-    buku = conn.execute('SELECT * FROM buku WHERE id = ?', (id,)).fetchone()
+    buku = conn.execute('SELECT * FROM buku WHERE id_buku = ?', (id_buku,)).fetchone()
 
     if buku is None:
         conn.close()
         return redirect(url_for('admin'))
 
-    if request.method == 'POST':
-        judul = request.form['judul'].strip()
-        penerbit = request.form['penerbit'].strip()
+    error = None
 
-        if judul and penerbit:
+    if request.method == 'POST':
+        judul_buku = request.form.get('judul_buku', '').strip()
+        penerbit = request.form.get('penerbit', '').strip()
+
+        if not judul_buku or not penerbit:
+            error = 'Judul dan penerbit wajib diisi.'
+        else:
             conn.execute(
-                'UPDATE buku SET judul = ?, penerbit = ? WHERE id = ?',
-                (judul, penerbit, id)
+                'UPDATE buku SET judul_buku = ?, penerbit = ? WHERE id_buku = ?',
+                (judul_buku, penerbit, id_buku)
             )
             conn.commit()
             conn.close()
             return redirect(url_for('admin'))
 
     conn.close()
-    return render_template('edit.html', buku=buku)
+    return render_template('edit.html', buku=buku, error=error)
 
 
-@app.route('/hapus/<int:id>', methods=('POST',))
-def hapus(id):
+#hapus buku
+@app.route('/hapus/<id_buku>', methods=['POST'])
+def hapus(id_buku):
     conn = get_db_connection()
-    conn.execute('DELETE FROM buku WHERE id = ?', (id,))
+    conn.execute('DELETE FROM buku WHERE id_buku = ?', (id_buku,))
     conn.commit()
     conn.close()
     return redirect(url_for('admin'))
 
 
+#detail buku
+@app.route('/detail/<id_buku>')
+def detail(id_buku):
+    conn = get_db_connection()
+    buku = conn.execute('SELECT * FROM buku WHERE id_buku = ?', (id_buku,)).fetchone()
+    conn.close()
 
+    if buku is None:
+        return redirect(url_for('home'))
+
+    return render_template('detail.html', buku=buku)
+
+#jalanin app
 if __name__ == '__main__':
     app.run(debug=True)
