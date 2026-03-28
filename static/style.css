@@ -375,3 +375,80 @@ body.redmoon-page {
         max-width: 100%;
     }
 }
+/* =========================================
+   ADMIN TABLE FIX - REDMOON'S LIBRARY 1.0
+========================================= */
+
+.admin-table {
+    width: 100%;
+    color: #ffffff;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 16px 12px;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.admin-table thead th {
+    color: #ffffff;
+    font-weight: 700;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.35);
+}
+
+/* Atur lebar kolom agar stabil */
+.admin-table th:nth-child(1),
+.admin-table td:nth-child(1) {
+    width: 15%;
+}
+
+.admin-table th:nth-child(2),
+.admin-table td:nth-child(2) {
+    width: 43%;
+}
+
+.admin-table th:nth-child(3),
+.admin-table td:nth-child(3) {
+    width: 17%;
+}
+
+.admin-table th:nth-child(4),
+.admin-table td:nth-child(4) {
+    width: 25%;
+}
+
+/* Judul buku boleh turun baris */
+.judul-col {
+    white-space: normal;
+    line-height: 1.5;
+}
+
+/* Kolom aksi */
+.aksi-col {
+    white-space: normal;
+}
+
+.aksi-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Biar form hapus tidak bikin layout kacau */
+.aksi-group form {
+    margin: 0;
+}
+
+/* Responsive agar tabel tetap aman */
+@media (max-width: 992px) {
+    .admin-table {
+        min-width: 900px;
+    }
+}

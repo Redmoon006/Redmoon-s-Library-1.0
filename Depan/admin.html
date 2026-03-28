@@ -19,28 +19,30 @@
     <div class="premium-card-body">
         {% if buku_list %}
         <div class="table-responsive">
-            <table class="table premium-table align-middle mb-0">
+            <table class="table premium-table admin-table align-middle mb-0">
                 <thead>
                     <tr>
                         <th>ID Buku</th>
                         <th>Judul Buku</th>
                         <th>Penerbit</th>
-                        <th width="280">Aksi</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for buku in buku_list %}
                     <tr>
                         <td>{{ buku['id_buku'] }}</td>
-                        <td>{{ buku['judul_buku'] }}</td>
+                        <td class="judul-col">{{ buku['judul_buku'] }}</td>
                         <td>{{ buku['penerbit'] }}</td>
-                        <td class="d-flex flex-wrap gap-2">
-                            <a href="{{ url_for('detail', id_buku=buku['id_buku']) }}" class="btn btn-info btn-sm text-white rounded-pill px-3">Detail</a>
-                            <a href="{{ url_for('edit', id_buku=buku['id_buku']) }}" class="btn btn-warning btn-sm rounded-pill px-3">Edit</a>
+                        <td class="aksi-col">
+                            <div class="aksi-group">
+                                <a href="{{ url_for('detail', id_buku=buku['id_buku']) }}" class="btn btn-info btn-sm text-white rounded-pill px-3">Detail</a>
+                                <a href="{{ url_for('edit', id_buku=buku['id_buku']) }}" class="btn btn-warning btn-sm rounded-pill px-3">Edit</a>
 
-                            <form action="{{ url_for('hapus', id_buku=buku['id_buku']) }}" method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-danger btn-sm rounded-pill px-3" onclick="return confirm('Yakin ingin menghapus buku ini?')">Hapus</button>
-                            </form>
+                                <form action="{{ url_for('hapus', id_buku=buku['id_buku']) }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-danger btn-sm rounded-pill px-3" onclick="return confirm('Yakin ingin menghapus buku ini?')">Hapus</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     {% endfor %}
